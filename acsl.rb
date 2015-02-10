@@ -194,6 +194,7 @@ def can_vote?
 	elsif voting_allowed and (Time.now - ACSLSettings::vote_start_time) <= ACSLSettings::settings[:settings][3]['voting_length']
 		return true
 	elsif voting_allowed and (Time.now - ACSLSettings::vote_start_time) > ACSLSettings::settings[:settings][3]['voting_length'] and Voter.all.count > 0
+		puts "Launching"
 		start_server_from_votes
 		Voter.destroy
 		ACSLSettings::vote_start_time(nil)
@@ -255,7 +256,7 @@ def start_server_from_votes
 		entry_list = ""
 		for car, count in cars
 			1.upto(count*multiplier) do |j|
-				entry_list += "[CAR_#{i}]\nDRIVERNAME=\nTEAM=\nMODEL=#{car}\nSKIN=#{skins[car].split(" ").sample}\nGUID=\nSPECTATOR_MODE=0\n\n"
+				entry_list += "[CAR_#{i}]\nDRIVERNAME=\nTEAM=\nMODEL=#{car}\nSKIN=#{skins[car].to_s.split(" ").sample}\nGUID=\nSPECTATOR_MODE=0\n\n"
 				i += 1
 			end
 		end
@@ -263,7 +264,7 @@ def start_server_from_votes
 		if difference != 0
 			for car, count in cars
 				1.upto(difference) do |j|
-					entry_list += "[CAR_#{i}]\nDRIVERNAME=\nTEAM=\nMODEL=#{car}\nSKIN=#{skins[car].split(" ").sample}\nGUID=\nSPECTATOR_MODE=0\n\n"
+					entry_list += "[CAR_#{i}]\nDRIVERNAME=\nTEAM=\nMODEL=#{car}\nSKIN=#{skins[car].to_s.split(" ").sample}\nGUID=\nSPECTATOR_MODE=0\n\n"
 					i += 1
 				end
 				break
