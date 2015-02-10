@@ -1,0 +1,16 @@
+---
+:paths:
+- server_folder: /var/acs
+- binary_name: acServer_linux
+:settings:
+- server_name: ACSL Managed Server
+- password: acsl
+- admin_password: whateveryouwant
+- voting_length: 180
+- max_clients: 20
+- page_title: Assetto Corsa Server Launcher
+:sessions:
+- pickup: Pickup Mode (2 hours practice)
+- booking: Booking Mode (30 mins practice, 20 mins quali, 10 laps race)
+:tracks: drift imola magione monza monza66 mugello nurburgring nurburgring-sprint silverstone silverstone-international silverstone-national spa vallelunga vallelunga-club
+:cars: bmw_m3_e92
