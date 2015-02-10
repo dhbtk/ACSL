@@ -1,0 +1,143 @@
+body
+{
+	color: #000;
+	background: linear-gradient(to right, #d9d9d9 0%,#d9d9d9 5%,#ffffff 10%,#ffffff 90%,#d9d9d9 95%,#d9d9d9 100%);
+	font-family: Helvetica, Myriad, Verdana, Arial, sans-serif;
+	font-size: 80%;
+}
+
+div#container
+{
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 0px;
+	padding: 10px;
+}
+
+div#serverstatus
+{
+	width: 45%;
+	float: left;
+}
+
+div#voting
+{
+	width: 54%;
+	float: right;
+}
+
+div#clear
+{
+	clear:both;
+}
+h1, h2, h3
+{
+	font-family: Myriad Pro, sans-serif;
+}
+h1
+{
+	font-size: 350%;
+	background-color: #2e73b9;
+	color: #FFF;
+	margin-bottom: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0px;
+	text-align: center;
+	padding: 15px;
+	border-radius: 15px;
+}
+
+h2
+{
+	margin: 0px;
+}
+
+/* tables */
+table, tr, td
+{
+	border: 1px solid;
+}
+
+table
+{
+	margin-left: 5px;
+	margin-right: 5px;
+	border-collapse: collapse;
+	text-align: center;
+	border: 1px solid #2e73b9;
+}
+
+table#ranking
+{
+	/*width: 100%;*/
+}
+
+table#history
+{
+	/*width: 50%;*/
+}
+
+thead
+{
+	background-color: #2e73b9;
+	color: #FFF;
+}
+
+thead tr td
+{
+	font-weight: bold;
+	width: 125px;
+	border-color: #2e73b9;
+	border-left: 1px solid #d6e5f5;
+	border-right: 1px solid #d6e5f5;
+}
+
+thead tr td:first-child
+{
+    border-left: 1px solid #2e73b9;
+}
+thead tr td:last-child
+{
+    border-right: 1px solid #2e73b9;
+}
+
+tbody tr
+{
+	border-color: #2e73b9;
+	background-color: #d6e5f5;
+}
+
+tbody tr:nth-child(even)
+{
+	background-color: #ebf2fa;
+}
+
+td
+{
+	margin: 2px;
+}
+
+/* classes */
+
+.online
+{
+	color: #009000;
+	font-weight: bold;
+}
+
+.offline
+{
+	color: #900000;
+	font-weight: bold;
+}
+
+.invisible
+{
+	display: none;
+}
+
+.bold
+{
+	font-weight: bold;
+}
