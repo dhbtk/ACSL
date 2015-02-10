@@ -102,7 +102,7 @@ thead tr td:last-child
     border-right: 1px solid #2e73b9;
 }
 
-tbody tr
+tbody tr td
 {
 	border-color: #2e73b9;
 	background-color: #d6e5f5;
