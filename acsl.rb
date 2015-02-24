@@ -37,7 +37,7 @@ configure do
 end
 # Vote storage
 DataMapper::Logger.new($stdout,:error)
-DataMapper.setup(:default,"sqlite::memory:")
+DataMapper.setup(:default,"sqlite://#{ACSLSettings::acsl_path}/votes.db")
 class SessionType
 	include DataMapper::Resource
 	property :name, String, :key => true
