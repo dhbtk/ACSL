@@ -223,23 +223,29 @@
 			<p>Voting is now <span id="votingstatus"></span> <span class="invisible" id="votetime">&bull; Time left: <span id="votetimeleft">00:00</span></span></p>
 			<form action="">
 			<h3>Session Type</h3>
-			<ul>
-				<% for session_type in session_types %>
-				<li><input class="radio" type="radio" name="session" value="<%= session_type.name %>" /><span class="session_name"><%= session_type.desc %></span> [<span class="bold session_votes s_<%= session_type.name %>"><%= session_type.voters.count %></span>]</li>
-				<% end %>
-			</ul>
+			<% q = (session_types.size.to_f/3).ceil; session_types.each_slice(q) do |session_types| %><div class="multicolumn">
+				<ul>
+					<% for session_type in session_types %>
+					<li><input class="radio" type="radio" name="session" value="<%= session_type.name %>" /><span class="session_name"><%= session_type.desc %></span><br/><span class="bold session_votes s_<%= session_type.name %>"><%= session_type.voters.count %></span> votes</li>
+					<% end %>
+				</ul>
+			</div><% end %>
 			<h3>Tracks</h3>
-			<ul>
-				<% for track in tracks %>
-				<li><input class="radio" type="radio" name="track" value="<%= track.name %>" /><span class="track_name"><%= track.name %></span> [<span class="bold track_votes t_<%= track.name %>"><%= track.voters.count %></span>]</li>
-				<% end %>
-			</ul>
+			<% q = (tracks.size.to_f/3).ceil; tracks.each_slice(q) do |tracks| %><div class="multicolumn">
+				<ul>
+					<% for track in tracks %>
+					<li><div class="thumbnail" <!--style="background: url('/tracks/<%= track.name %>_preview.png') no-repeat !important;"--><img src="/tracks/<%= track.name %>_outline.png"/></div><div class="optiontext"><input class="radio" type="radio" name="track" value="<%= track.name %>" /><span class="track_name"><%= track.name %></span></br><span class="bold track_votes t_<%= track.name %>"><%= track.voters.count %></span> votes</div></li>
+					<% end %>
+				</ul>
+			</div><% end %>
 			<h3>Cars</h3>
-			<ul>
-				<% for car in cars %>
-				<li><input class="radio" type="radio" name="car" value="<%= car.name %>" /><span class="car_name"><%= car.name %></span> [<span class="bold car_votes c_<%= car.name %>"><%= car.voters.count %></span>]</li>
-				<% end %>
-			</ul>
+			<% q = (cars.size.to_f/3).ceil; cars.each_slice(q) do |cars| %><div class="multicolumn">
+				<ul>
+					<% for car in cars %>
+					<li><div class="thumbnail"><img src="/cars/<%= car.name %>.jpg"/></div><div class="optiontext"><input class="radio" type="radio" name="car" value="<%= car.name %>" /><span class="car_name"><%= car.name %></span><br/><span class="bold car_votes c_<%= car.name %>"><%= car.voters.count %></span> votes</div></li>
+					<% end %>
+				</ul>
+			</div><% end %>
 			</form>
 			<div id="rawjson_voting">
 				

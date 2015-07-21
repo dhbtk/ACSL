@@ -48,12 +48,15 @@ end
 class Track
 	include DataMapper::Resource
 	property :name, String, :key => true
+	property :variant, String
+	property :desc, String
 	has n, :voters
 end
 
 class Car
 	include DataMapper::Resource
 	property :name, String, :key => true
+	property :desc, String
 	has n, :voters
 end
 
@@ -213,6 +216,7 @@ def start_server_from_votes
 	session_votes = 0
 	tracks = {}
 	voted_track = nil
+	track_variant = nil
 	track_votes = 0
 	cars = {}
 	car_list = []
@@ -226,6 +230,7 @@ def start_server_from_votes
 	for track in Track.all
 		if track.voters.count > track_votes
 			voted_track = track.name
+			track_variant = track.variant
 			track_votes = track.voters.count
 		end
 	end
@@ -243,6 +248,9 @@ def start_server_from_votes
 	server_config_file = server_config_file.gsub("$SERVERNAME$",ACSLSettings::settings[:settings][0]['server_name'])
 	server_config_file = server_config_file.gsub("$CARS$",car_list.join(';'))
 	server_config_file = server_config_file.gsub("$TRACK$",voted_track)
+	if track_variant != nil
+		server_config_file = server_config_file.gsub("$VARIANT$","CONFIG_TRACK=#{track_variant}")
+	end
 	server_config_file = server_config_file.gsub("$MAXCLIENTS$",ACSLSettings::settings[:settings][4]['max_clients'].to_s)
 	server_config_file = server_config_file.gsub("$PASSWORD$",ACSLSettings::settings[:settings][1]['password'])
 	server_config_file = server_config_file.gsub("$ADMPASSWORD$",ACSLSettings::settings[:settings][2]['admin_password'])
