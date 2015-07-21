@@ -48,7 +48,6 @@ end
 class Track
 	include DataMapper::Resource
 	property :name, String, :key => true
-	property :variant, String
 	property :desc, String
 	has n, :voters
 end
@@ -78,7 +77,7 @@ end
 for car in ACSLSettings::settings[:cars].split(' ')
 	res = Car.create(:name => car)
 end
-for track in ACSLSettings::settings[:tracks].split(' ')
+for track in ACSLSettings::settings[:tracks].split(',')
 	res = Track.create(:name => track)
 end
 
@@ -216,7 +215,6 @@ def start_server_from_votes
 	session_votes = 0
 	tracks = {}
 	voted_track = nil
-	track_variant = nil
 	track_votes = 0
 	cars = {}
 	car_list = []
@@ -230,7 +228,6 @@ def start_server_from_votes
 	for track in Track.all
 		if track.voters.count > track_votes
 			voted_track = track.name
-			track_variant = track.variant
 			track_votes = track.voters.count
 		end
 	end
@@ -247,9 +244,14 @@ def start_server_from_votes
 	server_config_file = File.read("#{ACSLSettings::acsl_path}/base_cfg_#{voted_session}.ini")
 	server_config_file = server_config_file.gsub("$SERVERNAME$",ACSLSettings::settings[:settings][0]['server_name'])
 	server_config_file = server_config_file.gsub("$CARS$",car_list.join(';'))
-	server_config_file = server_config_file.gsub("$TRACK$",voted_track)
-	if track_variant != nil
-		server_config_file = server_config_file.gsub("$VARIANT$","CONFIG_TRACK=#{track_variant}")
+	
+	if / /.match(voted_track)
+		track_name = voted_track.split(" ")[0]
+		variant    = voted_track.split(" ")[1]
+		server_config_file = server_config_file.gsub("$TRACK$",track_name)
+		server_config_file = server_config_file.gsub("$VARIANT$","CONFIG_TRACK=#{variant}")
+	else
+		server_config_file = server_config_file.gsub("$TRACK$",voted_track)
 	end
 	server_config_file = server_config_file.gsub("$MAXCLIENTS$",ACSLSettings::settings[:settings][4]['max_clients'].to_s)
 	server_config_file = server_config_file.gsub("$PASSWORD$",ACSLSettings::settings[:settings][1]['password'])
@@ -294,7 +296,7 @@ def get_server_ini_info
 	file = IniFile.load("#{ACSLSettings::settings[:paths][0]['server_folder']}/cfg/server_cfg.ini")
 	File.read("#{ACSLSettings::settings[:paths][0]['server_folder']}/cfg/server_cfg.ini")[/^CARS=([a-zA-Z0-9_;]+)/]
 	cars = $1.split(';').join(', ')
-	info = {:name => file['SERVER']['NAME'], :cars => cars, :track => file['SERVER']['TRACK'], :max_clients => file['SERVER']['MAX_CLIENTS'].to_i}
+	info = {:name => file['SERVER']['NAME'], :cars => cars, :track => file['SERVER']['TRACK'], :max_clients => file['SERVER']['MAX_CLIENTS'].to_i, :variant => file['SERVER']['CONFIG_TRACK']}
 	info
 end
 
