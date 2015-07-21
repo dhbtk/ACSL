@@ -17,6 +17,7 @@
 				$("span#currenttrack").text(resp["ini"]["track"]);
 				$("span#currentcars").text(resp["ini"]["cars"]);
 				$("span#maxusers").text(resp["ini"]["max_clients"]);
+				$("div#rawjson_session").text(resp["ini"]["variant"]);
 				// Server running or not
 				if(resp["running"])
 				{
@@ -234,7 +235,7 @@
 			<% q = (tracks.size.to_f/3).ceil; tracks.each_slice(q) do |tracks| %><div class="multicolumn">
 				<ul>
 					<% for track in tracks %>
-					<li><div class="thumbnail" <!--style="background: url('/tracks/<%= track.name %>_preview.png') no-repeat !important;"--><img src="/tracks/<%= track.name %>_outline.png"/></div><div class="optiontext"><input class="radio" type="radio" name="track" value="<%= track.name %>" /><span class="track_name"><%= track.name %></span></br><span class="bold track_votes t_<%= track.name %>"><%= track.voters.count %></span> votes</div></li>
+					<li><div class="thumbnail" style="background-image: url('/tracks/<%= track.name %>_preview.png');"><div class="thumboverlay"><div class="piccontainer"><img src="/tracks/<%= track.name %>_outline.png"/></div></div></div><div class="optiontext"><input class="radio" type="radio" name="track" value="<%= track.name %>" /><span class="track_name"><%= track.name %></span></br><span class="bold track_votes t_<%= track.name %>"><%= track.voters.count %></span> votes</div></li>
 					<% end %>
 				</ul>
 			</div><% end %>
