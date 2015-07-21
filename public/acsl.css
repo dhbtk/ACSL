@@ -118,6 +118,76 @@ td
 	margin: 2px;
 }
 
+/* List boxes */
+
+ul
+{
+	list-style: none;
+	margin:0;
+	padding:0;
+}
+
+li
+{
+	height: 4em;
+	margin:0;
+	padding:0;
+	box-shadow: 
+		2px 0 0 0 #888, /* right */
+		0 2px 0 0 #888, /* bottom */
+		2px 2px 0 0 #888,   /* Just to fix the corner */
+		2px 0 0 0 #888 inset, /* left */
+		0 2px 0 0 #888 inset; /* top */
+}
+
+div.multicolumn
+{
+	display: inline-block;
+	vertical-align: top;
+	width: 32%;
+	margin:0;
+	padding:0;
+}
+
+.thumbnail
+{
+	width: 25%;
+	height: 100%;
+	display: inline-block;
+	vertical-align: top;
+	margin:2px;
+	padding:0;
+	background-size: contain;
+	background-color: #888;
+	text-align: center;
+}
+
+.thumbnail img
+{
+	max-width: 99%;
+	max-height: 99%;
+	width: auto;
+	height: auto;
+}
+
+.thumbpic
+{
+	width:100%;
+	height:100%;
+	margin:0;
+	padding:0;
+	min-width: 100%;
+}
+
+.optiontext
+{
+	display: inline-block;
+	vertical-align: top;
+	max-width: 75%;
+	margin:0;
+	padding:0;
+}
+
 /* classes */
 
 .online
