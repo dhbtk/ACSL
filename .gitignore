@@ -1,6 +1,8 @@
 acsl.yaml
 py_output.yaml
 skins.yaml
+cars.yaml
+tracks.yaml
 unicorn.rb
 public/cars
 public/tracks

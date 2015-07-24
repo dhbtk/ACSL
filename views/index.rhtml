@@ -170,9 +170,23 @@
 		}
 		function send_vote(ev)
 		{
+			var child = '';
+			var li = '';
 			var vote = {}
+			if(ev.target.tagName != "LI")
+			{
+				li = $(ev.target).parents("li")[0];
+				child = $(li).children("input")[0];
+			} else
+			{
+				li = ev.target;
+				child = $(li).children("input")[0];
+			}
 			console.log(ev);
-			vote[ev.currentTarget.name] = ev.currentTarget.value;
+			console.log(child);
+			vote[child.name] = child.value;
+			$("li."+child.name).removeClass("selected");
+			$(li).addClass("selected");
 			console.log(vote);
 			$.post('/vote',vote,update_vote_status);
 		}
@@ -182,7 +196,11 @@
 			update_server_status();
 			setInterval(update_server_status,5000);
 			setInterval(update_vote_status,5000);
-			$(".radio").on("click",send_vote);
+			$("li").on("click",send_vote);
+		});
+		$("img").error(function()
+		{
+			$(this).css({visibility: "hidden"});
 		});
 	</script>
 	<div id="container">
@@ -227,7 +245,8 @@
 			<% q = (session_types.size.to_f/3).ceil; session_types.each_slice(q) do |session_types| %><div class="multicolumn">
 				<ul>
 					<% for session_type in session_types %>
-					<li><input class="radio" type="radio" name="session" value="<%= session_type.name %>" /><span class="session_name"><%= session_type.desc %></span><br/><span class="bold session_votes s_<%= session_type.name %>"><%= session_type.voters.count %></span> votes</li>
+					<% /(.+) (\(.+\))/.match session_type.desc; big_desc = $1; small_desc = $2 %>
+					<li class="session"><div class="sessiontext"><input type="hidden" name="session" value="<%= session_type.name %>" /><span class="session_name"><%= big_desc %></span><p class="smalldesc"><%= small_desc %></p><p class="session_votes"><span class="bold s_<%= session_type.name %>"><%= session_type.voters.count %></span> votes</p></div></li>
 					<% end %>
 				</ul>
 			</div><% end %>
@@ -235,7 +254,7 @@
 			<% q = (tracks.size.to_f/3).ceil; tracks.each_slice(q) do |tracks| %><div class="multicolumn">
 				<ul>
 					<% for track in tracks %>
-					<li><div class="thumbnail" style="background-image: url('/tracks/<%= track.name %>_preview.png');"><div class="thumboverlay"><div class="piccontainer"><img src="/tracks/<%= track.name %>_outline.png"/></div></div></div><div class="optiontext"><input class="radio" type="radio" name="track" value="<%= track.name %>" /><span class="track_name"><%= track.name %></span></br><span class="bold track_votes t_<%= track.name %>"><%= track.voters.count %></span> votes</div></li>
+					<li class="track"><input type="hidden" name="track" value="<%= track.name %>" /><div class="thumbnail" style="background-image: url('/tracks/<%= track.name %>_preview.png');"><div class="thumboverlay"><div class="piccontainer"><img src="/tracks/<%= track.name %>_outline.png"/></div></div></div><div class="optiontext"><span class="track_name"><%= track.desc %></span></br><p class="car_votes"><span class="bold  t_<%= track.name %>"><%= track.voters.count %></span> votes</p></div></li>
 					<% end %>
 				</ul>
 			</div><% end %>
@@ -243,7 +262,7 @@
 			<% q = (cars.size.to_f/3).ceil; cars.each_slice(q) do |cars| %><div class="multicolumn">
 				<ul>
 					<% for car in cars %>
-					<li><div class="thumbnail"><img src="/cars/<%= car.name %>.jpg"/></div><div class="optiontext"><input class="radio" type="radio" name="car" value="<%= car.name %>" /><span class="car_name"><%= car.name %></span><br/><span class="bold car_votes c_<%= car.name %>"><%= car.voters.count %></span> votes</div></li>
+					<li class="car"><input type="hidden" name="car" value="<%= car.name %>" /><div class="thumbnail"><img src="/cars/<%= car.name %>.jpg"/></div><div class="optiontext"><span class="car_name"><%= car.desc %></span><br/><p class="car_votes"><span class="bold c_<%= car.name %>"><%= car.voters.count %></span> votes</p></div></li>
 					<% end %>
 				</ul>
 			</div><% end %>
