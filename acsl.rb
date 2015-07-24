@@ -9,9 +9,13 @@ class ACSLSettings
 	@@vote_start_time = nil
 	@@settings = nil
 	@@acsl_path = nil
+	@@track_names = nil
+	@@car_names = nil
 	def self.init()
 		@@acsl_path = File.dirname(File.absolute_path(__FILE__))
 		@@settings = YAML.load(File.read("#{@@acsl_path}/acsl.yaml"))
+		@@track_names = YAML.load(File.read("#{@@acsl_path}/tracks.yaml"))
+		@@car_names = YAML.load(File.read("#{@@acsl_path}/cars.yaml"))
 		@@vote_start_time = nil
 	end
 	
@@ -21,6 +25,14 @@ class ACSLSettings
 	
 	def self.acsl_path
 		@@acsl_path
+	end
+	
+	def self.track_names
+		@@track_names
+	end
+	
+	def self.car_names
+		@@car_names
 	end
 	
 	def self.vote_start_time(*args)
@@ -75,10 +87,10 @@ for s in ACSLSettings::settings[:sessions]
 	res = SessionType.create(:name => s.to_a[0][0],:desc => s.to_a[0][1])
 end
 for car in ACSLSettings::settings[:cars].split(' ')
-	res = Car.create(:name => car)
+	res = Car.create(:name => car, :desc => ACSLSettings::car_names[car])
 end
 for track in ACSLSettings::settings[:tracks].split(',')
-	res = Track.create(:name => track)
+	res = Track.create(:name => track, :desc => ACSLSettings::track_names[track])
 end
 
 def get_server_status
@@ -252,6 +264,7 @@ def start_server_from_votes
 		server_config_file = server_config_file.gsub("$VARIANT$","CONFIG_TRACK=#{variant}")
 	else
 		server_config_file = server_config_file.gsub("$TRACK$",voted_track)
+		server_config_file = server_config_file.gsub("$VARIANT$","")
 	end
 	server_config_file = server_config_file.gsub("$MAXCLIENTS$",ACSLSettings::settings[:settings][4]['max_clients'].to_s)
 	server_config_file = server_config_file.gsub("$PASSWORD$",ACSLSettings::settings[:settings][1]['password'])
@@ -302,8 +315,8 @@ end
 
 get '/' do
 	session_types = SessionType.all
-	tracks = Track.all
-	cars = Car.all
+	tracks = Track.all(:order => [:desc.asc])
+	cars = Car.all(:order => [:desc.asc])
 	erb :index, :locals => { :session_types => session_types, :tracks => tracks, :cars => cars, :title => ACSLSettings::settings[:settings][5]['page_title'] }
 end
 

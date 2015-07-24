@@ -2,7 +2,8 @@ body
 {
 	color: #000;
 	background: linear-gradient(to right, #d9d9d9 0%,#d9d9d9 5%,#ffffff 10%,#ffffff 90%,#d9d9d9 95%,#d9d9d9 100%);
-	font-family: Helvetica, Myriad, Verdana, Arial, sans-serif;
+	/*font-family: Helvetica, Myriad, Verdana, Arial, sans-serif;*/
+	font-family: Arial, Verdana, sans-serif;
 	font-size: 80%;
 }
 
@@ -129,7 +130,9 @@ ul
 
 li
 {
-	height: 64px;
+	height: 60px;
+	background-color: #ebf2fa;
+	color: #000;
 	margin:0;
 	padding:0;
 	box-shadow: 
@@ -140,19 +143,68 @@ li
 		0 2px 0 0 #888 inset; /* top */
 }
 
+li:hover
+{
+	background-color: #d6e5f5;
+}
+
+.selected
+{
+	background-color: #ff9900;
+}
+
+.track_name, .car_name
+{
+	height: 45px;
+}
+
+.session_name
+{
+	height: 21px;
+}
+
+.session_name, .track_name, .car_name
+{
+	display: inline-block;
+	line-height: 20px;
+	font-size: 16px;
+	font-weight: bold;
+	margin:0;
+	padding:0;
+}
+
+.session_votes, .track_votes, .car_votes
+{
+	line-height: 12px;
+	font-size: 12px;
+	margin:0;
+	padding:0;
+}
+
+.smalldesc
+{
+	line-height: 12px;
+	font-size: 12px;
+	margin:0;
+	padding:0;
+	height: 27px;
+}
+
 div.multicolumn
 {
 	display: inline-block;
 	vertical-align: top;
-	width: 32%;
+	max-width: 240px;
+	width: 100%;
+	min-width: 120px;
 	margin:0;
 	padding:0;
 }
 
 .thumbnail
 {
-	width: 64px;
-	height: 100%;
+	width: 58px;
+	height: 58px;
 	display: inline-block;
 	vertical-align: top;
 	margin:2px;
@@ -161,6 +213,7 @@ div.multicolumn
 	background-size: cover;
 	background-color: #000;
 	text-align: center;
+	box-shadow: 2px 0 0 0 #888;
 }
 
 .thumboverlay
@@ -182,8 +235,8 @@ div.multicolumn
 
 .piccontainer img
 {
-	max-width: 90%;
-	max-height: 90%;
+	max-width: 100%;
+	max-height: 100%;
 	width: auto;
 	height: auto;
 }
@@ -192,9 +245,16 @@ div.multicolumn
 {
 	display: inline-block;
 	vertical-align: top;
-	max-width: 75%;
-	margin:0;
+	height: 58px;
+	max-width: 173px;
+	margin: 2px;
 	padding:0;
+	overflow: hidden;
+}
+
+.sessiontext
+{
+	margin: 4px;
 }
 
 /* classes */
