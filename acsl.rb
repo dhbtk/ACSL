@@ -309,7 +309,19 @@ def get_server_ini_info
 	file = IniFile.load("#{ACSLSettings::settings[:paths][0]['server_folder']}/cfg/server_cfg.ini")
 	File.read("#{ACSLSettings::settings[:paths][0]['server_folder']}/cfg/server_cfg.ini")[/^CARS=([a-zA-Z0-9_;]+)/]
 	cars = $1.split(';').join(', ')
-	info = {:name => file['SERVER']['NAME'], :cars => cars, :track => file['SERVER']['TRACK'], :max_clients => file['SERVER']['MAX_CLIENTS'].to_i, :variant => file['SERVER']['CONFIG_TRACK']}
+	track = file['SERVER']['TRACK']
+	info = {:name => file['SERVER']['NAME'], :cars => cars, :raw_track => track, :max_clients => file['SERVER']['MAX_CLIENTS'].to_i, :variant => file['SERVER']['CONFIG_TRACK']}
+	if info[:variant]
+		track_record = Track.first(:name => track + ' ' + info[:variant])
+		if track_record
+			info[:track] = track_record.desc
+		end
+	else
+		track_record = Track.first(:name => track)
+		if track_record
+			info[:track] = track_record.desc
+		end
+	end
 	info
 end
 
