@@ -33,7 +33,8 @@ for track in track_folder_list:
 			for subtrack in subfolder_list:
 				if os.path.isfile(tracks_path+"\\"+track+"\\ui\\"+subtrack+"\\ui_track.json") and os.path.isfile(tracks_path+"\\"+track+"\\ui\\"+subtrack+"\\outline.png") and os.path.isfile(tracks_path+"\\"+track+"\\ui\\"+subtrack+"\\preview.png"):
 					track_list.append(track+" "+subtrack)
-					json_data = json.load(open(tracks_path+"\\"+track+"\\ui\\"+subtrack+"\\ui_track.json"))
+					#print(track+" "+subtrack)
+					json_data = json.loads(open(tracks_path+"\\"+track+"\\ui\\"+subtrack+"\\ui_track.json").read(), encoding="latin-1")
 					track_names[track+" "+subtrack] = json_data["name"]
 					shutil.copyfile(tracks_path+"\\"+track+"\\ui\\"+subtrack+"\\outline.png","public\\tracks\\"+track+" "+subtrack+"_outline.png")
 					shutil.copyfile(tracks_path+"\\"+track+"\\ui\\"+subtrack+"\\preview.png","public\\tracks\\"+track+" "+subtrack+"_preview.png")
