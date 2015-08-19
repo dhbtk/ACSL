@@ -24,7 +24,7 @@ for track in track_folder_list:
 		if os.path.isfile(tracks_path+"\\"+track+"\\ui\\outline.png") and os.path.isfile(tracks_path+"\\"+track+"\\ui\\preview.png") and os.path.isfile(tracks_path+"\\"+track+"\\ui\\ui_track.json"):
 			track_list.append(track)
 			# Add track name to track_details
-			json_data = json.load(open(tracks_path+"\\"+track+"\\ui\\ui_track.json"))
+			json_data = json.loads(open(tracks_path+"\\"+track+"\\ui\\ui_track.json").read(), encoding="latin-1")
 			track_names[track] = json_data["name"]
 			shutil.copyfile(tracks_path+"\\"+track+"\\ui\\outline.png","public\\tracks\\"+track+"_outline.png")
 			shutil.copyfile(tracks_path+"\\"+track+"\\ui\\preview.png","public\\tracks\\"+track+"_preview.png")
@@ -48,7 +48,7 @@ for car in car_folder_list:
 		car_list.append(car)
 		car_skin_list[car] = []
 		try:
-			json_data = json.JSONDecoder(strict=False).decode(open(cars_path+"\\"+car+"\\ui\\ui_car.json").read())
+			json_data = json.JSONDecoder(strict=False).loads(open(cars_path+"\\"+car+"\\ui\\ui_car.json").read(), encoding="latin-1")
 		except ValueError:
 			json_data = {}
 			json_data["name"] = car
